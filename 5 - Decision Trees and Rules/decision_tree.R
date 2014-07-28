@@ -26,8 +26,12 @@ library(C50)
 
 credit_model <- C5.0(credit_train[-17], credit_train$default)
 
+##
+## Step 4: Evaluate Performance
+##
 
+credit_pred <- predict(credit_model, credit_test)
 
-
-
+library(gmodels)
+CrossTable(credit_test$default, credit_pred, prop.chisq = FALSE, prop.c = FALSE, prop.r = FALSE, dnn = c("Actual Default", "Predicted Default"))
 
