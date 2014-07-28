@@ -15,5 +15,19 @@ set.seed(1234)
 credit_rand <- credit[order(runif(length(credit[,1]))),]
 
 # Split data for train/test
-credit_train <- credit_rand[1:900,1]
+credit_train <- credit_rand[1:900,]
 credit_test <- credit_rand[901:1000,]
+
+##
+## Step 3: Train
+##
+# Use C50 library install.packages("C50")
+library(C50)
+
+credit_model <- C5.0(credit_train[-17], credit_train$default)
+
+
+
+
+
+
