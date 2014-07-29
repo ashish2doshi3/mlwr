@@ -14,3 +14,13 @@ mushrooms$veil_type <- NULL
 
 # Check distribution of classification
 table(mushrooms$type)
+
+##
+## Step 3: Train
+##
+
+# Use RWeka from install.packages("RWeka") for 1R
+library(RWeka)
+
+mushroom_1R <- OneR(type ~ ., data = mushrooms)
+
