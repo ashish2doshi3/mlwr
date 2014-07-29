@@ -28,7 +28,7 @@ mushroom_1R <- OneR(type ~ ., data = mushrooms)
 ## Step 4: Evaluate Performance
 ##
 
-summary(mushrooms_1R)
+summary(mushroom_1R)
 
 ##
 ## Step 5: Improve Performance
