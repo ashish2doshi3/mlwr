@@ -24,3 +24,16 @@ library(RWeka)
 
 mushroom_1R <- OneR(type ~ ., data = mushrooms)
 
+##
+## Step 4: Evaluate Performance
+##
+
+summary(mushrooms_1R)
+
+##
+## Step 5: Improve Performance
+##
+
+# RIPPER algorithm
+mushroom_JRip <- JRip(type ~ ., data = mushrooms)
+mushroom_JRip
