@@ -19,3 +19,10 @@ pairs(insurance[c("age", "bmi", "children", "charges")])
 # Use psych package for further info
 library(psych)
 pairs.panels(insurance[c("age", "bmi", "children", "charges")])
+
+##
+## Step 3 - Train
+##
+
+# lm() from stats package built in
+ins_model <- lm(charges ~ age + children + bmi + sex + smoker + region, data = insurance)
