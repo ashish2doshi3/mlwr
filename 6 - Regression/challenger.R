@@ -11,3 +11,17 @@ r <- cov(launch$temperature, launch$distress_ct) / (sd(launch$temperature) * sd(
 
 # Build in correlation
 r <- cor(launch$temperature, launch$distress_ct)
+
+#
+# Multiple Linear Regressions
+#
+
+# B = (Xt * X) **-1 * Xt * Y
+reg <- function(x, y) {
+        x <- as.matrix(x)
+        x <- cbind(Intercept = 1, x)
+        solve(t(x) %*% x) %*% t(x) %*% y
+}
+
+reg(y = launch$distress_ct, x = launch[3])[, 1]
+reg(y = launch$distress_ct, x = launch[3:5])[, 1]
