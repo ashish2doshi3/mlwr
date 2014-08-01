@@ -28,3 +28,20 @@ m.rpart
 library(rpart.plot)
 
 rpart.plot(m.rpart, digits = 3)
+
+##
+## Step 4 - Evaluate Performance
+##
+
+p.rpart <- predict(m.rpart, wine_test)
+summary(p.rpart)
+
+# Check correlation of predicted to actual
+cor(p.rpart, wine_test$quality)
+
+# Mean Absolute Error
+MAE <- function(actual, predicted) {
+        mean(abs(actual - predicted))
+}
+
+MAE(p.rpart, wine_test$quality)
