@@ -45,3 +45,13 @@ MAE <- function(actual, predicted) {
 }
 
 MAE(p.rpart, wine_test$quality)
+
+##
+## Step 5 - Improve Performance
+##
+
+# Use M5 algorithm from RWeka package
+library(RWeka)
+
+m.m5p <- M5P(quality ~., data = wine_train)
+m.m5p
