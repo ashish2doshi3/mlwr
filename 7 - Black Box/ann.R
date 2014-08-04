@@ -42,3 +42,15 @@ predicted_strength <- model_results$net.result
 
 # Get correlation between prediction and actual
 cor(predicted_strength, concrete_test$strength)
+
+##
+## Step 5 - Improve Performance
+##
+
+# Use multiple hidden layers
+concrete_model2 <- neuralnet(strength ~ cement + slag + ash + water + superplastic + coarseagg + fineagg + age, data = concrete_train, hidden = 5)
+
+plot(concrete_model2)
+model_results2 <- compute(concrete_model2, concrete_test[1:8])
+predicted_strength2 <- model_results2$net.result
+cor(predicted_strength2, concrete_test$strength)
