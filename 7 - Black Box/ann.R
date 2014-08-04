@@ -18,3 +18,14 @@ summary(concrete_norm$strength)
 
 concrete_train <- concrete_norm[1:773, ]
 concrete_test <- concrete_norm[774:1030, ]
+
+##
+## Step 3 - Train Data
+##
+
+# Use install.packages("neuralnet")
+
+library(neuralnet)
+
+concrete_model <- neuralnet(strength ~ cement + slag + ash + water + superplastic + coarseagg + fineagg + age, data = concrete_train)
+plot(concrete_model)
