@@ -29,3 +29,16 @@ library(neuralnet)
 
 concrete_model <- neuralnet(strength ~ cement + slag + ash + water + superplastic + coarseagg + fineagg + age, data = concrete_train)
 plot(concrete_model)
+
+##
+## Step 4 - Performance
+##
+
+# Compute returns $neurons for each layer in the network
+# and $net.results as the predicted output layer
+model_results <- compute(concrete_model, concrete_test[1:8])
+
+predicted_strength <- model_results$net.result
+
+# Get correlation between prediction and actual
+cor(predicted_strength, concrete_test$strength)
