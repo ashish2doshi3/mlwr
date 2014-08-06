@@ -44,3 +44,11 @@ apriori(groceries)
 # or about 60 times. 60/9835 = 0.006100661
 
 groceryrules <- apriori(groceries, parameter = list(support = 0.006100661, confidence = 0.25, minlen = 2))
+
+##
+## Step 4 - Evaluate Performance
+##
+summary(groceryrules)
+
+# Check specific rules
+inspect(groceryrules[1:3])
