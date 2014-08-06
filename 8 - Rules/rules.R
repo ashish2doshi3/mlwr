@@ -52,3 +52,18 @@ summary(groceryrules)
 
 # Check specific rules
 inspect(groceryrules[1:3])
+
+##
+## Step 5 - Improve Performance
+##
+
+inspect(sort(groceryrules, by = "lift")[1:5])
+
+# Subsets of association rules
+berryrules <- subset(groceryrules, items %in% "berries")
+
+# Write rules to file
+write(groceryrules, file = "groceryrules.csv", sep = ",", quote = TRUE, row.names = FALSE)
+
+# Or convert to a data frame
+groceryrules_df <- as(groceryrules, "data.frame")
