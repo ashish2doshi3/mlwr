@@ -31,3 +31,16 @@ image(groceries[1:5])
 
 # Or sample random 100 transactions
 image(sample(groceries, 100))
+
+##
+## Step 3 - Train
+##
+
+# Produces no results since default support is 0.1
+# Which produces 0.1 * 9835 = 983 items needed for a rule
+apriori(groceries)
+
+# Change to deal with items purchased 2 times a day
+# or about 60 times. 60/9835 = 0.006100661
+
+groceryrules <- apriori(groceries, parameter = list(support = 0.006100661, confidence = 0.25, minlen = 2))
