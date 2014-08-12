@@ -43,3 +43,19 @@ aggregate(data = teens, age ~ gradyear, mean, na.rm = TRUE)
 ave_age <- ave(teens$age, teens$gradyear, FUN = function(x) mean(x, na.rm = TRUE))
 
 teens$age <- ifelse(is.na(teens$age), ave_age, teens$age)
+
+##
+## Step 3 - Train
+##
+
+# Using stats package
+library(stats)
+
+# Select 36 features to start out
+interests <- teens[5:40]
+
+# Normalize using zscore with scale()
+interests_z <- as.data.frame(lapply(interests, scale))
+
+# Randomly choose 5 clusters for k
+teen_clusters <- kmeans(interests_z, 5)
