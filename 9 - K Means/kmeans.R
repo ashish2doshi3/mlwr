@@ -59,3 +59,44 @@ interests_z <- as.data.frame(lapply(interests, scale))
 
 # Randomly choose 5 clusters for k
 teen_clusters <- kmeans(interests_z, 5)
+
+##
+## Step 4 - Evaluate Performance
+##
+
+# Check sizes of clusters
+# [1]  5997  1016 21566   868   553
+teen_clusters$size
+
+# Examine cluster centroids
+teen_clusters$centers
+
+##
+## Step 5 - Improve Performance
+##
+
+# Apply clusters back into data set
+teens$cluster <- teen_clusters$cluster
+
+teens[1:5, c("cluster", "gender", "age", "friends")]
+
+# Shows mean age doesn't change much per cluster
+#cluster      age
+#1       1 17.06780
+#2       2 17.11104
+#3       3 17.30259
+#4       4 16.86294
+#5       5 17.35022
+aggregate(data = teens, age ~ cluster, mean)
+
+# Shows clusters are predictive of gender for the most part
+#cluster    female
+#1       1 0.8464232
+#2       2 0.8021654
+#3       3 0.6966058
+#4       4 0.8375576
+#5       5 0.7468354
+aggregate(data = teens, female ~ cluster, mean)
+
+# Check number of friends for clusters
+aggregate(data = teens, friends ~ cluster, mean)
