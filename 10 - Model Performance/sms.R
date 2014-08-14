@@ -55,3 +55,48 @@ Kappa(table(sms_results$actual_type, sms_results$predict_type))
 # install.packages("irr")
 library(irr)
 kappa2(sms_results[1:2])
+
+##  Sensitivity And Specificity
+
+# Sensitivity - True positive rate - (tp / (tp + fp))
+sens <- 154 / (154 + 29)
+
+# Specificity - True negative rate - (tn / (tn + fp))
+spec <- 1202 / (1202 + 5)
+
+# Using caret package
+library(caret)
+
+sensitivity(sms_results$predict_type, sms_results$actual_type, positive = "spam")
+specificity(sms_results$predict_type, sms_results$actual_type, negative = "ham")
+
+## Precision and Recall
+
+# Precision - proportion of positive predicted values actually positive
+# tp / (tp + fp)
+prec <- 154 / (154 + 5)
+
+# Recall - measure of how complete the results are
+# tp / (tp + fn)
+rec <- 154 / (154 + 29)
+
+# Using caret package
+posPredValue(sms_results$predict_type, sms_results$actual_type, positive = "spam")
+
+## F-Score - Harmonic mean of precision and recall
+# (2 * precision * recall) / (recall + precision)
+
+f <- (2 * prec * rec) / (prec + rec)
+
+##
+## Visualizing Performance Tradeoffs
+##
+
+# ROCR Package - install.packages("ROCR")
+library(ROCR)
+
+pred <- prediction(predictions = sms_results$prob_spam, labels = sms_results$actual_type)
+
+# ROC - Receiver Operating Characteristics curves
+perf <- performance(pred, measure = "tpr", x.measure = "fpr")
+plot(perf, main = "ROC curve for SMS spam filter", col = "blue", lwd = 3)
