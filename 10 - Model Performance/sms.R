@@ -100,3 +100,8 @@ pred <- prediction(predictions = sms_results$prob_spam, labels = sms_results$act
 # ROC - Receiver Operating Characteristics curves
 perf <- performance(pred, measure = "tpr", x.measure = "fpr")
 plot(perf, main = "ROC curve for SMS spam filter", col = "blue", lwd = 3)
+# Plot useless classifier baseline
+abline(a = 0, b = 1, lwd = 2, lty = 2)
+
+# Get Area Under Curve
+perf.auc <- performance(pred, measure = "auc")
