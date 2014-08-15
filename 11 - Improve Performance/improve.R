@@ -39,3 +39,31 @@ grid <- expand.grid(.model = "tree", .trials = c(1, 5, 10, 15, 20, 25, 30, 35), 
 # Now train using customed tuning settings
 set.seed(300)
 m <- train(default ~., data = credit, method = "C5.0", metric = "Kappa", trControl = ctrl, tuneGrid = grid)
+
+##
+## Meta Learning - Ensembles
+##
+
+# Bagging - use ipred package
+library(ipred)
+set.seed(300)
+
+# Create 25 decision trees
+mybag <- bagging(default ~., data = credit, nbag = 25)
+
+credit_pred <- predict(mybag, credit)
+table(credit_pred, credit$default)
+
+# Using caret package and treebag from ipred
+library(caret)
+set.seed(300)
+
+ctrl <- trainControl(method = "cv", number = 10)
+train(default ~., data = credit, method = "treebag", trControl = ctrl)
+
+# Bagged SVM model using svmBag from caret package
+bagctrl <- bagControl(fit = svmBag$fit, predict = svmBag$pred, aggregate = svmBag$aggregate)
+
+# Actually performed just as good if not better
+# Which differs from a worse output found in the book
+svmbag <- train(default ~ ., data = credit, "bag", trControl = ctrl, bagControl = bagctrl)
