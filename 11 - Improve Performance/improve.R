@@ -67,3 +67,31 @@ bagctrl <- bagControl(fit = svmBag$fit, predict = svmBag$pred, aggregate = svmBa
 # Actually performed just as good if not better
 # Which differs from a worse output found in the book
 svmbag <- train(default ~ ., data = credit, "bag", trControl = ctrl, bagControl = bagctrl)
+
+##
+## Random Forests
+##
+
+library(randomForest)
+set.seed(300)
+
+rf <- randomForest(default ~ ., data = credit)
+
+# Using Caret package random forests
+library(caret)
+set.seed(300)
+
+ctrl <- trainControl(method = "repeatedcv", number = 10, repeats = 10)
+grid_rf <- expand.grid(.mtry = c(2, 4, 8, 16))
+
+m_rf <- train(default ~ ., data = credit, method = "rf",
+              metric = "Kappa", trControl = ctrl,
+              tuneGrid = grid_rf)
+
+# Use C5.0 Decision Tree to compare with random forests
+grid_c50 <- expand.grid(.model = "tree",
+                        .trials = c(10, 20, 30, 40),
+                        .winnow = "FALSE")
+set.seed(300)
+m_c50 <- train(default ~ ., data = credit, method = "C5.0",
+               metric = "Kappa", trControl = ctrl, tuneGrid = grid_c50)
